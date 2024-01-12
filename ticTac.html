@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+</head>
+<body class="tic">
+
+
+
+
+    <style>
+        ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          background-color: #100236;
+        }
+        
+        li {
+          float: left;
+          border-right:1px solid #bbb;
+        }
+        
+            
+        
+        li a {
+          display: block;
+          color: white;
+          text-align: center;
+          padding: 20px 20px;
+          text-decoration: none;
+        }
+        
+        li a:hover:not(.active) {
+          background-color: #111;
+        }
+        
+        .active {
+          background-color: #0407aa;
+        }
+        
+        </style>
+
+<ul>
+    <li><a href="index.html">Menu</a></li>
+    <li><a href="colorGame.html">Color hexa game</a></li>
+    <li><a class="active" href="ticTac.html">Tic tac toe</a></li>
+  </ul>
+
+
+
+
+
+
+
+    <link rel="stylesheet" href="mystyle.css">
+    <h1>Tic Tac Toe</h1>
+    <h3>Vyber velikost hraci plochy</h3>
+    <input type="number" id="velikost" min="3" value="3">
+    <button onclick="start()">Start Game</button>
+    <h5>Doporucuji velikost 5</h5>
+    <table id="hra" style="margin-top: 20px; border-collapse: collapse; user-select: none; margin-left: 45%;"></table>
+
+    <script>
+        let zrovnaHraje = "X";
+        let mrizka = [];
+        function start() 
+        {
+
+
+            velikostPloch = Number(document.getElementById("velikost").value, 10);
+            hraStart();
+        }
+
+        function hraStart() 
+        {
+
+            const table = document.getElementById("hra");
+            table.innerHTML = "";
+            mrizka = Array.from(Array(velikostPloch), 
+            () => new Array(velikostPloch).fill(""));
+            for (let i = 0; i < velikostPloch; i++) 
+            {
+                const row = table.insertRow();
+                for (let j = 0; j < velikostPloch; j++) 
+                {   
+                    //vlozeni bunky do tabulky do tr
+                    const cell = row.insertCell(); cell.onclick = () => polozit(i, j);
+                }
+            }
+        }
+
+
+
+        function polozit(radek, odstavec) {
+            if (mrizka[radek] [odstavec] == "") 
+            {
+                mrizka[radek][odstavec] = zrovnaHraje;
+                dal();
+                if (checkWinner()) 
+                {
+                    console.warn("lol");
+                    alert('Hrac s '+zrovnaHraje+  ' vyhrál!!');
+                    hraStart();
+                }else 
+                {
+
+                    zrovnaHraje = zrovnaHraje === "X" ? "O" : "X";
+                }
+            }
+        }
+
+
+        function dal() {
+            const table = document.getElementById("hra");
+            for (let i = 0; i < velikostPloch; i++) 
+            {
+                for (let j = 0; j < velikostPloch; j++) 
+                {
+                    table.rows[i].cells[j].innerText = mrizka[i][j];
+                }
+            }
+        }
+
+
+        function checkWinner() {
+            
+            for (let i = 0; i < velikostPloch; i++) 
+            {
+                if (rada(mrizka[i]))
+                {
+                    return true;
+                } 
+            }
+
+            
+            for (let j = 0; j < velikostPloch; j++) 
+            {
+                //.map je metoda pro pole a dela to ze vytvori nove pole a zavola kazdy element ve starem a prenese je do noveho
+                if (rada(mrizka.map(rada => rada[j])))
+                {
+                    return true;
+                } 
+            }
+
+           
+            if (rada(mrizka.map((rada, i) => rada[i])))
+            {
+                
+                return true;
+            } 
+
+            
+            if (rada(mrizka.map((rada, i) => rada[velikostPloch - i - 1])))
+            {
+                return true;
+
+            } 
+
+            return false;
+        }
+
+        function rada(x) {
+            //every vraci boolean pokud vsechny elementy splnuji podmink(u/y)
+            return x.every(cell => cell == zrovnaHraje);
+        }
+
+       
+    </script>
+
+
+
+</body>
+</html>
