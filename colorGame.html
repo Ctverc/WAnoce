@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hra na vanoce</title>
+</head>
+<body>
+   
+    <link rel="stylesheet" href="mystyle.css">
+    
+    <style>
+        ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          background-color: #100236;
+        }
+        
+        li {
+          float: left;
+          border-right:1px solid #bbb;
+        }
+        
+            
+        
+        li a {
+          display: block;
+          color: white;
+          text-align: center;
+          padding: 20px 20px;
+          text-decoration: none;
+        }
+        
+        li a:hover:not(.active) {
+          background-color: #111;
+        }
+        
+        .active {
+          background-color: #0407aa;
+        }
+        </style>
+
+<ul>
+    <li><a href="index.html">Menu</a></li>
+    <li><a class="active" href="colorGame.html">Color hexa game</a></li>
+    <li><a href="ticTac.html">Tic tac toe</a></li>
+  </ul>
+
+
+  
+    <h1 >Hex Color Guessing Game</h1>
+    <form>
+        <label for="quantity">Vyberte si obtížnost: (Kolik chcete nabídek z barvami mezi 10 až 50) :</label>
+        <input type="number" id="userDiff" name="quantity" min="10" max="50">
+      </form>
+    <button type="button" onclick="difficulty()">Spustťě / resetujte hru!</button>
+    <h1 id="hadanaBarva"></h1>
+
+
+    
+    <div class="playZone">
+        <div class="flex-container">
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>  
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>  
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>  
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>  
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>  
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>  
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>  
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>  
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>  
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>  
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>  
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>  
+            <div class="barva" onclick="checkGuess(this)"> </div>  
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>  
+            <div class="barva" onclick="checkGuess(this)"> </div>  
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>  
+            <div class="barva" onclick="checkGuess(this)"> </div>  
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>  
+            <div class="barva" onclick="checkGuess(this)"> </div>  
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>
+            <div class="barva" onclick="checkGuess(this)"> </div>  
+            
+          </div>
+
+
+          <h3 id="aaa"></h3>
+    </div>
+
+
+    <script>
+       
+
+        function difficulty()
+        {
+            const obt = document.getElementById("userDiff").value;
+            if(obt <10||obt>50){
+                alert("nezadali jste číslo nebo bylo moc vysoké, zvolila se nejednoduší obtížnost");
+                showDiv(10);
+            }
+            
+            var toAdd = document.createDocumentFragment();
+            for(var i=0; i < 11; i++){
+            var newDiv = document.createElement('div');
+            newDiv.className = 'barva';
+            toAdd.appendChild(newDiv);       
+}
+            showDiv(obt);
+            startGame();
+
+
+        }
+
+        function showDiv(x) {
+            for(var i =0; i<x;i++){
+                divs[i].style.display ="block";
+            }
+   
+}
+
+
+
+
+        var divs = document.getElementsByClassName('barva');
+
+        function startGame() {
+           
+
+        for(var i =0; i < divs.length; i++){
+            divs[i].style.background = getRandomColor();
+            
+        }
+        currentColor = divs[getRandomInt(divs.length)].style.background;
+        var rgb = currentColor;
+
+        rgb = rgb.substring(4, rgb.length-1)
+         .replace(/ /g, '')
+         .split(',');
+
+        
+        console.warn(0,0,0)
+        vyberbarvy=(rgbToHex(Number(rgb[0]), Number(rgb[1]), Number(rgb[2])));
+        document.getElementById("hadanaBarva").innerHTML = vyberbarvy;
+        }
+
+
+
+
+
+        function componentToHex(c) {
+            var hex = c.toString(16);
+            return hex.length == 1 ? "0" + hex : hex;
+        }
+
+        function rgbToHex(r, g, b) {
+        return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+
+        
+
+
+
+        
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+}
+
+        
+        var colors = ["#FF0000", "#00FF00", "#0000FF", "#000000", "#FFFFFF", "#FFFF00", "#800080", "#FFA500", "#FFC0CB", "#A52A2A"];
+        function getRandomColor() 
+        {
+            
+            return colors[Math.floor(Math.random() * colors.length)];
+        }   
+        var chy =0;
+        function checkGuess(elem) {
+            
+            
+            if(currentColor==elem.style.backgroundColor)
+            {
+                document.getElementById("aaa").innerHTML = "Správně! počet pokusů: "+chy;
+                console.warn('aaa');
+
+            }  else
+            {
+                elem.style.display ="none";
+                chy++;
+                document.getElementById("aaa").innerHTML = "Pocet chyb: "+chy;
+            }
+
+
+    }
+
+    
+
+
+
+
+
+    </script>
+
+    
+</body>
+</html>
